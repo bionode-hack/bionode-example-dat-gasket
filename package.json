@@ -1,0 +1,46 @@
+{
+  "name": "bionode-example-dat-gasket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bionode": "^0.7.1",
+    "dat": "^6.8.1",
+    "tool-stream": "^0.2.1"
+  },
+  "author": {
+    "name": "Bruno Vieira",
+    "email": "mail@bmpvieira.com"
+  },
+  "license": "MIT",
+  "gasket": {
+    "fetch-eukaryota-genomes-metadata": [
+      "dat init --no-prompt",
+      "bionode ncbi search genome eukaryota",
+      "dat import --json"
+    ],
+    "map-guillardia-sequences": [
+      "dat cat",
+      "grep Guillardia",
+      "tool-stream extractProperty assemblyid",
+      "bionode ncbi download assembly",
+      "tool-stream collectMatch status completed ",
+      "tool-stream extractProperty uid",
+      "bionode ncbi link assembly bioproject ",
+      "tool-stream extractProperty destUID",
+      "bionode ncbi link bioproject sra",
+      "tool-stream extractProperty destUID",
+      "grep 35526",
+      "bionode ncbi download sra",
+      "bionode sra fastq-dump",
+      "tool-stream extractProperty destFile",
+      "bionode bwa mem **/*fna.gz",
+      "tool-stream collectMatch status finished",
+      "tool-stream extractProperty sam",
+      "bionode sam"
+    ]
+  }
+}
