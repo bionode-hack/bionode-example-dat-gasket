@@ -7,13 +7,14 @@
     "init": "dat init --no-prompt",
     "fetch": "gasket run fetch-eukaryota-genomes-metadata",
     "search": "gasket run search-ncbi-metadata",
-    "align": "gasket run align-and-convert-to-bam"
+    "align": "gasket run index-and-align",
+    "bam": "gasket run convert-to-bam"
   },
   "dependencies": {
     "bionode-bwa": "0.0.9",
     "bionode-ncbi": "^1.0.1",
     "bionode-sam": "^1.0.1",
-    "bionode-sra": "^0.2.5",
+    "bionode-sra": "^1.0.0",
     "dat": "^6.8.1",
     "tool-stream": "^0.2.1"
   },
@@ -37,16 +38,20 @@
       "bionode-ncbi link assembly bioproject -",
       "tool-stream extractProperty destUID",
       "bionode-ncbi link bioproject sra -",
-      "tool-stream extractProperty destUID"
+      "tool-stream extractProperty destUID",
+      "grep 35526",
+      "bionode-ncbi download sra -",
+      "tool-stream collectMatch status completed",
+      "tee > metadata.json"
     ],
-    "align-and-convert-to-bam": [
-      "bionode-ncbi download sra 35526",
+    "index-and-align": [
+      "cat metadata.json",
       "bionode-sra fastq-dump -",
       "tool-stream extractProperty destFile",
-      "bionode-bwa mem **/*fna.gz",
-      "tool-stream collectMatch status finished",
-      "tool-stream extractProperty sam",
-      "bionode-sam -"
+      "bionode-bwa mem **/*fna.gz"
+    ], 
+    "convert-to-bam": [
+      "bionode-sam 35526/SRR070675.sam"
     ]
   }
 }
