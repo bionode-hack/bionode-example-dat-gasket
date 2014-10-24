@@ -10,13 +10,21 @@ On your command line, run the following:
 git clone git@github.com:bionode/bionode-example-dat-gasket.git
 cd bionode-example-dat-gasket
 npm install
-npm install gasket -g
 ```
 
 ## Run
+
+There are 4 pipelines defined in `package.json` that you can run in order.
+
+### Create a new empty dat repo
+
+```bash
+npm run init
+```
+
 ### Get all [Eukaryota](http://en.wikipedia.org/wiki/Eukaryote) genomes [metadata](http://en.wikipedia.org/wiki/Metadata) from [NCBI](http://www.ncbi.nlm.nih.gov) into Dat
 ```bash
-gasket run fetch-eukaryota-genomes-metadata
+npm run fetch
 ```
 #### What is happening?
 The previous command will run a pipeline named ```fetch-eukaryota-genomes-metadata``` that is stored inside the [package.json](https://github.com/bionode/bionode-example-dat-gasket/blob/master/package.json) file of this git repository.
@@ -33,10 +41,10 @@ The following is a description of that pipeline:
 
 You can look at the data that got stored by doing ```dat listen``` (then go to localhost:6461 in your browser) or ```dat cat | head``` while in the same folder where the ```.dat``` folder is located.
 
-### [Map](http://en.wikipedia.org/wiki/Sequence_alignment) the [*Guillardia theta*](http://en.wikipedia.org/wiki/Guillardia) genomic sequences
+### Search NCBI for our raw data
 
 ```bash
-gasket run map-guillardia-sequences
+npm run search
 ```
 #### What is happening?
 Like the previous gasket command, this runs another pipeline inside the [package.json](https://github.com/bionode/bionode-example-dat-gasket/blob/master/package.json) file.
@@ -71,7 +79,12 @@ Here's the description of that pipeline:
 // we will only download the smallest dataset by using its unique ID that
 // we figured out in advance. In a normal situation, the following command
 // would not be here.
-"grep 35526",
+"grep 35526"
+```
+
+### [Align](http://en.wikipedia.org/wiki/Sequence_alignment) the [*Guillardia theta*](http://en.wikipedia.org/wiki/Guillardia) genomic sequences
+
+```bash
 // Download the SRA file
 "bionode ncbi download sra",
 // Extract a FASTQ file containing the DNA sequences from the SRA file
@@ -88,7 +101,6 @@ Here's the description of that pipeline:
 "tool-stream extractProperty sam",
 // Convert the SAM file to a binary format (BAM)
 "bionode sam"
-```
 
 Once you have a BAM file, you can view which [scaffold](http://en.wikipedia.org/wiki/Contig#Sequence_contigs) of the reference genomes has more [reads](http://www.k.u-tokyo.ac.jp/pros-e/person/shinichi_morishita/genome-assembly.jpg) mapped to it
 ```bash

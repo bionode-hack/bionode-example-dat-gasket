@@ -4,10 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "init": "dat init --no-prompt",
+    "fetch": "gasket run fetch-eukaryota-genomes-metadata",
+    "search": "gasket run search-ncbi-metadata",
+    "align": "gasket run align-and-convert-to-bam"
   },
   "dependencies": {
-    "bionode": "^0.7.1",
+    "bionode-bwa": "0.0.9",
+    "bionode-ncbi": "^1.0.1",
+    "bionode-sam": "^1.0.1",
+    "bionode-sra": "^0.2.5",
     "dat": "^6.8.1",
     "tool-stream": "^0.2.1"
   },
@@ -18,29 +24,29 @@
   "license": "MIT",
   "gasket": {
     "fetch-eukaryota-genomes-metadata": [
-      "dat init --no-prompt",
-      "bionode ncbi search genome eukaryota",
-      "dat import --json"
+      "bionode-ncbi search genome eukaryota",
+      "dat import --json --primary=uid"
     ],
-    "map-guillardia-sequences": [
+    "search-ncbi-metadata": [
       "dat cat",
       "grep Guillardia",
       "tool-stream extractProperty assemblyid",
-      "bionode ncbi download assembly",
-      "tool-stream collectMatch status completed ",
+      "bionode-ncbi download assembly -",
+      "tool-stream collectMatch status completed",
       "tool-stream extractProperty uid",
-      "bionode ncbi link assembly bioproject ",
+      "bionode-ncbi link assembly bioproject -",
       "tool-stream extractProperty destUID",
-      "bionode ncbi link bioproject sra",
-      "tool-stream extractProperty destUID",
-      "grep 35526",
-      "bionode ncbi download sra",
-      "bionode sra fastq-dump",
+      "bionode-ncbi link bioproject sra -",
+      "tool-stream extractProperty destUID"
+    ],
+    "align-and-convert-to-bam": [
+      "bionode-ncbi download sra 35526",
+      "bionode-sra fastq-dump -",
       "tool-stream extractProperty destFile",
-      "bionode bwa mem **/*fna.gz",
+      "bionode-bwa mem **/*fna.gz",
       "tool-stream collectMatch status finished",
       "tool-stream extractProperty sam",
-      "bionode sam"
+      "bionode-sam -"
     ]
   }
 }
