@@ -1,8 +1,6 @@
 # Bionode Example with Dat and Gasket
 This is a basic example of using [Dat](http://dat-data.com), [Gasket](https://github.com/datproject/gasket) and [Bionode](http://bionode.io) to do reproducible bioinformatics.
 
-## WORK IN PROGRESS
-This example is not yet fully functional. We are fixing some bugs.
 
 ## Install
 On your command line, run the following:

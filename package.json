@@ -16,6 +16,7 @@
     "bionode-sam": "^1.0.1",
     "bionode-sra": "^1.0.0",
     "dat": "^6.8.1",
+    "gasket": "^1.3.0",
     "tool-stream": "^0.2.1"
   },
   "author": {
@@ -49,7 +50,7 @@
       "bionode-sra fastq-dump -",
       "tool-stream extractProperty destFile",
       "bionode-bwa mem **/*fna.gz"
-    ], 
+    ],
     "convert-to-bam": [
       "bionode-sam 35526/SRR070675.sam"
     ]
