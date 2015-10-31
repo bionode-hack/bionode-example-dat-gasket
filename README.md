@@ -1,4 +1,6 @@
 # Bionode Example with Dat and Gasket
+
+[![Join the chat at https://gitter.im/bionode/bionode-example-dat-gasket](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/bionode/bionode-example-dat-gasket?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 This is a basic example of using [Dat](http://dat-data.com), [Gasket](https://github.com/datproject/gasket) and [Bionode](http://bionode.io) to do reproducible bioinformatics.
 
 
