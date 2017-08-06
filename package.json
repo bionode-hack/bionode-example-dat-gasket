@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "bionode-bwa": "0.0.9",
-    "bionode-ncbi": "^1.0.1",
+    "bionode-ncbi": "^2.0.0",
     "bionode-sam": "^1.0.1",
     "bionode-sra": "^1.0.0",
     "dat": "^6.8.1",
